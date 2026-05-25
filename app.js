@@ -1,12 +1,14 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import methodOverride from 'method-override'
+import ejsMate from 'ejs-mate'
 import { Listing } from './models/listing.js';
 
 const port = 8080
 const app = express()
 
 app.set("view engine", 'ejs')
+app.engine('ejs', ejsMate)
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'));
@@ -56,14 +58,14 @@ app.post('/listings', async (req, res) => {
   const newListing = new Listing(req.body.listing)
 
   try {
-    const result = await newListing.save()
+    await newListing.save()
     res.redirect('/listings')
   } catch (error) {
     console.log(error)
   }
 })
 
-app.get('/listings/edit/:id', async (req, res) => {
+app.get('/listings/:id/edit', async (req, res) => {
   const { id } = req.params
 
   try {
@@ -74,17 +76,28 @@ app.get('/listings/edit/:id', async (req, res) => {
   }
 })
 
-app.patch('/listings/edit/:id', async (req, res) => {
+app.patch('/listings/:id/edit', async (req, res) => {
   const { id } = req.params
   const { listing } = req.body
 
   try {
-    const result = await Listing.findByIdAndUpdate(
+    await Listing.findByIdAndUpdate(
       id,
       listing,
       { runValidators: true }
     )
 
+    res.redirect(`/listings/${id}`)
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+app.delete('/listings/:id', async (req, res) => {
+  const { id } = req.params
+
+  try {
+    await Listing.findByIdAndDelete(id)
     res.redirect('/listings')
   } catch (error) {
     console.log(error)

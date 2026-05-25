@@ -1,37 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout('layouts/boilerplate.ejs') %>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/style.css">
-  <title>Wandlerlust - New Listing</title>
-</head>
+  <body>
+    <div class="row">
+      <div class="col-8 offset-2">
+        <h3 class="listing-main-header">Create New Listing</h3>
 
-<body>
-  <h3>Create a New Listing</h3>
+        <form method="POST" action="/listings">
+          <div class="mb-3">
+            <label class="form-label" for="title">Title</label>
+            <input id="title" class="form-control" type="text" name="listing[title]" autofocus autocomplete="off"
+              required>
+          </div>
 
-  <form method="POST" action="/listings">
-    <input type="text" name="listing[title]" placeholder="Enter title" autofocus autocomplete="off" required>
-    <br><br>
+          <div class="mb-3">
+            <label class="form-label" for="description">Description</label>
+            <textarea id="description" class="form-control" name="listing[description]"></textarea>
+          </div>
 
-    <textarea name="listing[description]" placeholder="Enter description"></textarea>
-    <br><br>
+          <div class="mb-3">
+            <label class="form-label" for="image">Image URL</label>
+            <input id="image" class="form-control" type="text" name="listing[image]" placeholder="URL/Link"
+              autocomplete="off">
+          </div>
 
-    <input type="text" name="listing[image]" placeholder="Enter image URL" autocomplete="off">
-    <br><br>
+          <div class="mb-3">
+            <label class="form-label" for="price">Price</label>
+            <input id="price" class="form-control" type="number" name="listing[price]" placeholder="250"
+              autocomplete="off" required>
+          </div>
 
-    <input type="number" name="listing[price]" placeholder="Enter price" autocomplete="off" required>
-    <br><br>
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label class="form-label" for="location">Location</label>
+              <input id="location" class="form-control" type="text" name="listing[location]" placeholder="New York"
+                autocomplete="off" required>
+            </div>
+            <div class="col-md-8 mb-3">
+              <label class="form-label" for="country">Country</label>
+              <input id="country" class="form-control" type="text" name="listing[country]" placeholder="United States"
+                autocomplete="off" required>
+            </div>
+          </div>
 
-    <input type="text" name="listing[location]" placeholder="Enter location" autocomplete="off" required>
-    <br><br>
-
-    <input type="text" name="listing[country]" placeholder="Enter country" autocomplete="off" required>
-    <br><br>
-
-    <button type="submit">Create Listing</button>
-  </form>
-</body>
-
-</html>
+          <button class="btn custom-btn" type="submit">Create Listing</button>
+        </form>
+      </div>
+    </div>
+  </body>

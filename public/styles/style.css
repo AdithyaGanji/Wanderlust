@@ -1,0 +1,122 @@
+html {
+  /* font-size: 62.5%; */
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 90rem;
+  padding-inline: .75rem;
+}
+
+.navbar {
+  height: 5rem;
+  background-color: #FFF;
+}
+
+.nav-link {
+  color: #222;
+}
+
+footer {
+  height: 7.5rem;
+  background-color: #EBEBEB;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: .65rem;
+}
+
+.footer-links a:nth-child(1) {
+  margin-right: .1rem;
+}
+
+.footer-links a:nth-child(2) {
+  margin-left: .1rem;
+}
+
+.footer-links a {
+  color: #222;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.card {
+  height: fit-content;
+  border: none;
+  margin-bottom: 2rem;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.card-body {
+  padding: 0;
+}
+
+.card-text {
+  margin-bottom: .25rem;
+}
+
+.listing-title {
+  font-size: 1.2rem;
+  margin-top: .65rem;
+}
+
+.listing-link {
+  text-decoration: none;
+}
+
+.card-img-overlay {
+  opacity: 0;
+}
+
+.card-img-overlay:hover {
+  opacity: 0.2;
+  background-color: #FFF;
+}
+
+.custom-btn {
+  color: #FFF;
+  background-color: #FE424D;
+  border: 1px solid transparent;
+  margin: .2rem 0 2rem;
+  transition: opacity 0.1s;
+}
+
+.custom-btn:hover {
+  opacity: 0.95;
+}
+
+.custom-btn:hover, .custom-btn:active {
+  color: #FFF;
+  background-color: #FE424D;
+}
+
+.listing-main-header {
+  margin-block: 1rem;
+}
+
+.show-img {
+  height: 20rem;
+}
+
+.edit-btn-link, .delete-btn-link {
+  display: inline-block;
+}
+
+.show-card {
+  margin-bottom: 1.35rem;
+}
