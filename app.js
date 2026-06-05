@@ -9,7 +9,7 @@ import session from 'express-session'
 import flash from 'connect-flash'
 import passport from 'passport'
 import LocalStrategy from 'passport-local'
-import User from './models/user.js'
+import { User } from './models/user.js'
 
 const port = 8080
 const app = express()

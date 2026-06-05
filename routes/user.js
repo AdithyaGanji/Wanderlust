@@ -1,59 +1,23 @@
 import express from 'express'
-import User from '../models/user.js'
 import passport from 'passport'
 import { saveRedirectURL } from '../middleware.js'
+import userController from '../controllers/users.js'
 
 const router = express.Router({ mergeParams: true })
 
-router.get('/signup', (req, res) => {
-  res.render('users/signup.ejs')
-})
+router.get('/signup', userController.renderSignupForm)
 
-router.post('/signup', async (req, res) => {
-  try {
-    const { username, email, password } = req.body
-    const newUser = new User({ username, email })
+router.post('/signup', userController.signup)
 
-    const registeredUser = await User.register(newUser, password)
-    console.log(registeredUser)
-
-    req.login(registeredUser, (error) => {
-      if (error) {
-        return next(error)
-      }
-
-      req.flash("success", "Registered Succesfully. Welcome to Wanderlust!")
-      res.redirect('/listings')
-    })
-  } catch (error) {
-    req.flash("error", error.message + '.')
-    res.redirect('/signup')
-  }
-})
-
-router.get('/login', (req, res) => {
-  res.render('users/login.ejs')
-})
+router.get('/login', userController.renderLoginForm)
 
 router.post(
   '/login',
   saveRedirectURL,
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
-  async (req, res) => {
-    req.flash("success", "Login Successful!")
-    res.redirect(res.locals.redirectURL || "/listings")
-  }
+  userController.login
 )
 
-router.get('/logout', (req, res) => {
-  req.logout((error) => {
-    if (error) {
-      return next(error)
-    }
-
-    req.flash("success", "Logout Successful!")
-    res.redirect('/listings')
-  })
-})
+router.get('/logout', userController.logout)
 
 export default router
