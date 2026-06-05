@@ -1,20 +1,31 @@
 <% layout('layouts/boilerplate.ejs') %>
-
   <body>
     <div class="row">
       <div class="col-8 offset-2">
         <h3 class="listing-main-header">Create New Listing</h3>
 
-        <form method="POST" action="/listings">
+        <form class="needs-validation" method="POST" action="/listings" novalidate>
           <div class="mb-3">
             <label class="form-label" for="title">Title</label>
-            <input id="title" class="form-control" type="text" name="listing[title]" autofocus autocomplete="off"
+            <input id="title" class="form-control" type="text" name="listing[title]" autofocus autocomplete="off" placeholder="Add a title"
               required>
+            <div class="valid-feedback">
+              Title looks good!
+            </div>
+            <div class="invalid-feedback">
+              Please enter a title.
+            </div>
           </div>
 
           <div class="mb-3">
             <label class="form-label" for="description">Description</label>
-            <textarea id="description" class="form-control" name="listing[description]"></textarea>
+            <textarea id="description" class="form-control" name="listing[description]" required placeholder="Add a description"></textarea>
+            <div class="valid-feedback">
+              Description looks good!
+            </div>
+            <div class="invalid-feedback">
+              Please enter a description.
+            </div>
           </div>
 
           <div class="mb-3">
@@ -27,6 +38,9 @@
             <label class="form-label" for="price">Price</label>
             <input id="price" class="form-control" type="number" name="listing[price]" placeholder="250"
               autocomplete="off" required>
+            <div class="invalid-feedback">
+              Please enter a valid price.
+            </div>
           </div>
 
           <div class="row">
@@ -34,11 +48,17 @@
               <label class="form-label" for="location">Location</label>
               <input id="location" class="form-control" type="text" name="listing[location]" placeholder="New York"
                 autocomplete="off" required>
+              <div class="invalid-feedback">
+                Please enter a valid location.
+              </div>
             </div>
             <div class="col-md-8 mb-3">
               <label class="form-label" for="country">Country</label>
               <input id="country" class="form-control" type="text" name="listing[country]" placeholder="United States"
                 autocomplete="off" required>
+              <div class="invalid-feedback">
+                Please enter a valid country.
+              </div>
             </div>
           </div>
 

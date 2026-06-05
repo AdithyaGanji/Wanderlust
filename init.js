@@ -139,7 +139,7 @@ const sampleListings = [
     location: "Austin",
     country: "United States"
   }
-]
+].map((listing) => ({...listing, owner: '6a215b1b0d3c7615ee428994'}))
 
 Listing.insertMany(sampleListings)
   .then((res) => { console.log(res) })

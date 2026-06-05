@@ -9,6 +9,7 @@ body {
 
 .container {
   margin: 0 auto;
+  min-height: 100vh;
   max-width: 90rem;
   padding-inline: .75rem;
 }
@@ -51,8 +52,11 @@ footer {
 
 .card {
   height: fit-content;
-  border: none;
   margin-bottom: 2rem;
+}
+
+.listing-card {
+  border: none;
 }
 
 .card-img-top {
@@ -92,7 +96,6 @@ footer {
   color: #FFF;
   background-color: #FE424D;
   border: 1px solid transparent;
-  margin: .2rem 0 2rem;
   transition: opacity 0.1s;
 }
 
@@ -119,4 +122,25 @@ footer {
 
 .show-card {
   margin-bottom: 1.35rem;
+}
+
+.page-not-found-wrapper {
+  min-height: 75vh;
+}
+
+.page-not-found-text {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.error-message-wrapper {
+  min-height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-block: 2rem;
+}
+
+.review-card {
+  padding-block: .75rem;
 }

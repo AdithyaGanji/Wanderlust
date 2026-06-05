@@ -5,13 +5,12 @@
   <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-2 row-cols-xs-1">
     <% for (let listing of listings) { %>
       <a class="listing-link" href="/listings/<%= listing.id %>">
-          <div class="card">
+          <div class="card listing-card">
             <div class="card-img-overlay"></div>
             <img src="<%= listing.image %>" class="card-img-top" alt="Image of a listing.">
             <div class="card-body">
               <p class="card-text listing-title"><b><%= listing.title %></b></p>
-              <p class="card-text listing-price">$<%= listing.price.toLocaleString('en-US') %> / night</p>
-              <p class="card-text listing-description"><%= listing.description %></p>
+              <p class="card-text listing-price">$<%= listing.price.toLocaleString('en-US') %> / night</p>  
             </div>
           </div>
       </a>

@@ -2,16 +2,41 @@ import express from 'express'
 import mongoose from 'mongoose'
 import methodOverride from 'method-override'
 import ejsMate from 'ejs-mate'
-import { Listing } from './models/listing.js';
+import listingsRouter from './routes/listing.js'
+import reviewsRouter from './routes/review.js'
+import usersRouter from './routes/user.js'
+import session from 'express-session'
+import flash from 'connect-flash'
+import passport from 'passport'
+import LocalStrategy from 'passport-local'
+import User from './models/user.js'
 
 const port = 8080
 const app = express()
+const sessionOptions = {
+  secret: "supersecretkey",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true
+  }
+}
 
 app.set("view engine", 'ejs')
 app.engine('ejs', ejsMate)
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
-app.use(methodOverride('_method'));
+app.use(methodOverride('_method'))
+
+app.use(session(sessionOptions))
+app.use(flash());
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new LocalStrategy(User.authenticate()))
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser());
 
 (async function () {
   try {
@@ -26,80 +51,25 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`)
 })
 
-app.get('/', (req, res) => {
-  console.log("Hello, World!")
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user
+
+  res.locals.success = req.flash("success")
+  res.locals.error = req.flash("error")
+  
+  next()
 })
 
-app.get('/listings', async (req, res) => {
-  try {
-    const listings = await Listing.find()
-    res.render('listings/listings.ejs', { listings })
-  } catch (error) {
-    console.log(error)
-  }
+app.use('/listings', listingsRouter)
+app.use('/listings/:id/reviews', reviewsRouter)
+app.use('/', usersRouter)
+
+app.use((req, res) => {
+  res.status(404).render('not-found.ejs')
 })
 
-app.get('/listings/new', (req, res) => {
-  res.render('listings/new.ejs')
-})
-
-app.get('/listings/:id', async (req, res) => {
-  const { id } = req.params
-
-  try {
-    const listing = await Listing.findById(id)
-    res.render('listings/show.ejs', { listing })
-  } catch (error) {
-    console.log(error)
-  }
-})
-
-app.post('/listings', async (req, res) => {
-  const newListing = new Listing(req.body.listing)
-
-  try {
-    await newListing.save()
-    res.redirect('/listings')
-  } catch (error) {
-    console.log(error)
-  }
-})
-
-app.get('/listings/:id/edit', async (req, res) => {
-  const { id } = req.params
-
-  try {
-    const listing = await Listing.findById(id)
-    res.render('listings/edit.ejs', { listing })
-  } catch (error) {
-    console.log(error)
-  }
-})
-
-app.patch('/listings/:id/edit', async (req, res) => {
-  const { id } = req.params
-  const { listing } = req.body
-
-  try {
-    await Listing.findByIdAndUpdate(
-      id,
-      listing,
-      { runValidators: true }
-    )
-
-    res.redirect(`/listings/${id}`)
-  } catch (error) {
-    console.log(error)
-  }
-})
-
-app.delete('/listings/:id', async (req, res) => {
-  const { id } = req.params
-
-  try {
-    await Listing.findByIdAndDelete(id)
-    res.redirect('/listings')
-  } catch (error) {
-    console.log(error)
-  }
+app.use((err, req, res, next) => {
+  const { statusCode=500, message="Something went wrong." } = err
+  console.log(err)
+  res.status(statusCode).render('error.ejs', { message })
 })
