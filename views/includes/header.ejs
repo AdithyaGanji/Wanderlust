@@ -4,19 +4,26 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="ms-1 collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link" href="/listings">Home</a>
-        <a class="nav-link" href="/listings">All Listings</a>
-        <a class="nav-link" href="/listings/new">Add New Listing</a>
+        <a class="nav-text nav-link" href="/listings">Explore</a>
+      </div>
+      <div class="navbar-search ms-auto">
+        <form class="d-flex" role="search" method="GET" action="/listings">
+          <input name="location" class="w-100 form-control me-2 search-input" type="search" placeholder="Search Locations" aria-label="Search" autocomplete="off"/>
+          <button class="custom-btn search-btn" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" height="26.5px" viewBox="0 -960 960 960" width="26.5px" fill="#FFF"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
+          </button>
+        </form>
       </div>
       <div class="navbar-nav ms-auto">
         <% if (!currentUser) { %>
-          <a class="nav-link" href="/signup">SignUp</a>
-          <a class="nav-link" href="/login">Login</a>
+          <a class="nav-text nav-link" href="/signup">Signup</a>
+          <a class="nav-text nav-link" href="/login">Login</a>
         <% } %>
         <% if (currentUser) { %>
-          <a class="nav-link" href="/logout">Logout</a>
+          <a class="nav-text ms-auto nav-link" href="/listings/new">Add Listing</a>
+          <a class="nav-text nav-link" href="/logout">Logout</a>
         <% } %>
       </div>
     </div>

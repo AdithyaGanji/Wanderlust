@@ -5,16 +5,12 @@ import reviewController from '../controllers/reviews.js'
 
 const router = express.Router({ mergeParams: true })
 
-// ROUTES
-
-// Create Route
 router.post(
   '/',
   validateReview,
   isLoggedIn, wrapAsync(reviewController.createReview)
 )
 
-// Destroy Route
 router.delete(
   '/:reviewId',
   isLoggedIn,

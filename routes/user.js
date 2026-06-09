@@ -5,18 +5,17 @@ import userController from '../controllers/users.js'
 
 const router = express.Router({ mergeParams: true })
 
-router.get('/signup', userController.renderSignupForm)
+router.route('/signup')
+  .get(userController.renderSignupForm)
+  .post(userController.signup)
 
-router.post('/signup', userController.signup)
-
-router.get('/login', userController.renderLoginForm)
-
-router.post(
-  '/login',
-  saveRedirectURL,
-  passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
-  userController.login
-)
+router.route('/login')
+  .get(userController.renderLoginForm)
+  .post(
+    saveRedirectURL,
+    passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
+    userController.login
+  )
 
 router.get('/logout', userController.logout)
 

@@ -1,21 +1,102 @@
 <% layout('layouts/boilerplate.ejs') %>
 <body>
-  <h3 class="listing-main-header">All Listings</h3>
+   <div class="filters-wrapper">
+    <div class="filters">
+      <a class="filter <%= (category === 'trending') ? 'active-filter' : '' %>" href="/listings?category=trending">
+        <svg class="filter-icon" xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000"><path d="M240-400q0 52 21 98.5t60 81.5q-1-5-1-9v-9q0-32 12-60t35-51l113-111 113 111q23 23 35 51t12 60v9q0 4-1 9 39-35 60-81.5t21-98.5q0-50-18.5-94.5T648-574q-20 13-42 19.5t-45 6.5q-62 0-107.5-41T401-690q-39 33-69 68.5t-50.5 72Q261-513 250.5-475T240-400Zm240 52-57 56q-11 11-17 25t-6 29q0 32 23.5 55t56.5 23q33 0 56.5-23t23.5-55q0-16-6-29.5T537-292l-57-56Zm0-492v132q0 34 23.5 57t57.5 23q18 0 33.5-7.5T622-658l18-22q74 42 117 117t43 163q0 134-93 227T480-80q-134 0-227-93t-93-227q0-129 86.5-245T480-840Z"/></svg>
+        <span class="filter-text">Trending</span>
+        <div class="highlight"></div>
+      </a>
+      <a class="filter <%= (category === 'hotels') ? 'active-filter' : '' %>" href="/listings?category=hotels">
+        <svg class="filter-icon" xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000"><path d="M40-200v-600h80v400h320v-320h320q66 0 113 47t47 113v360h-80v-120H120v120H40Zm155-275q-35-35-35-85t35-85q35-35 85-35t85 35q35 35 35 85t-35 85q-35 35-85 35t-85-35Zm325 75h320v-160q0-33-23.5-56.5T760-640H520v240ZM308.5-531.5Q320-543 320-560t-11.5-28.5Q297-600 280-600t-28.5 11.5Q240-577 240-560t11.5 28.5Q263-520 280-520t28.5-11.5ZM280-560Zm240-80v240-240Z"/></svg>
+        <span class="filter-text">Hotels</span>
+        <div class="highlight"></div>
+      </a>
+      <a class="filter <%= (category === 'cities') ? 'active-filter' : '' %>" href="/listings?category=cities">
+        <svg class="filter-icon" xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000"><path d="M120-120v-560h160v-160h400v320h160v400H520v-160h-80v160H120Zm80-80h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm160 160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm160 320h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm160 480h80v-80h-80v80Zm0-160h80v-80h-80v80Z"/></svg>
+        <span class="filter-text">Cities</span>
+        <div class="highlight"></div>
+      </a>
+      <a class="filter <%= (category === 'mountains') ? 'active-filter' : '' %>" href="/listings?category=mountains">
+        <svg class="filter-icon" xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000"><path d="M80-80v-186l350-472-70-94 64-48 56 75 56-75 64 48-70 94 350 472v186H80Zm400-591L160-240v80h120l200-280 200 280h120v-80L480-671ZM378-160h204L480-302 378-160Zm102-280 200 280-200-280-200 280 200-280Z"/></svg>
+        <span class="filter-text">Mountains</span>
+        <div class="highlight"></div>
+      </a>
+      <a class="filter <%= (category === 'castles') ? 'active-filter' : '' %>" href="/listings?category=castles">
+        <svg class="filter-icon" xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000"><path d="M40-120v-480h80v80h80v-320h80v80h80v-80h80v80h80v-80h80v80h80v-80h80v320h80v-80h80v480H560v-120q0-33-23.5-56.5T480-320q-33 0-56.5 23.5T400-240v120H40Zm80-80h200v-40q0-66 47-113t113-47q66 0 113 47t47 113v40h200v-240H680v-240H280v240H120v240Zm240-280h80v-120h-80v120Zm160 0h80v-120h-80v120Zm-40 40Z"/></svg>
+        <span class="filter-text">Castles</span>
+        <div class="highlight"></div>
+      </a>
+      <a class="filter <%= (category === 'pools') ? 'active-filter' : '' %>" href="/listings?category=pools">
+        <svg class="filter-icon" xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000"><path d="M80-120v-80q38 0 57-20t75-20q56 0 77 20t57 20q36 0 57-20t77-20q56 0 77 20t57 20q36 0 57-20t77-20q56 0 75 20t57 20v80q-59 0-77.5-20T748-160q-36 0-57 20t-77 20q-56 0-77-20t-57-20q-36 0-57 20t-77 20q-56 0-77-20t-57-20q-36 0-54.5 20T80-120Zm0-180v-80q38 0 57-20t75-20q56 0 77.5 20t56.5 20q36 0 57-20t77-20q56 0 77 20t57 20q36 0 57-20t77-20q56 0 77 20t57 20q36 0 57-20t77-20q56 0 75 20t57 20v80q-59 0-77.5-20T748-340q-36 0-55.5 20T614-300q-57 0-77.5-20T480-340q-38 0-56.5 20T346-300q-59 0-78.5-20T212-340q-36 0-54.5 20T80-300Zm196-204 133-133-40-40q-33-33-70-48t-91-15v-100q75 0 124 16.5t96 63.5l256 256q-17 11-33 17.5t-37 6.5q-36 0-57-20t-77-20q-56 0-77 20t-57 20q-21 0-37-6.5T276-504Zm463-306.5q29 29.5 29 70.5 0 42-29 71t-71 29q-42 0-71-29t-29-71q0-41 29-70.5t71-29.5q42 0 71 29.5Z"/></svg>
+        <span class="filter-text">Pools</span>
+        <div class="highlight"></div>
+      </a>
+      <a class="filter <%= (category === 'farms') ? 'active-filter' : '' %>" href="/listings?category=farms">
+        <svg class="filter-icon" xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000"><path d="M160-600q-17 0-28.5-11.5T120-640q0-17 11.5-28.5T160-680h120q33 0 56.5 23.5T360-600H160Zm80 360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm582.5-17.5Q840-275 840-300t-17.5-42.5Q805-360 780-360t-42.5 17.5Q720-325 720-300t17.5 42.5Q755-240 780-240t42.5-17.5ZM240-300q-25 0-42.5-17.5T180-360q0-25 17.5-42.5T240-420q25 0 42.5 17.5T300-360q0 25-17.5 42.5T240-300Zm560-139q26 5 43 13.5t37 27.5v-242q0-33-23.5-56.5T800-720H548l-42-44 56-56-28-28-142 142 30 28 56-56 42 42v92q0 33-23.5 56.5T440-520h-81q23 17 37 35t28 45h16q66 0 113-47t47-113v-40h200v201ZM641-320q6-27 14.5-43.5T682-400H436q4 23 4 40t-4 40h205Zm139 160q-58 0-99-41t-41-99q0-58 41-99t99-41q58 0 99 41t41 99q0 58-41 99t-99 41Zm-540 0q-83 0-141.5-58.5T40-360q0-83 58.5-141.5T240-560q83 0 141.5 58.5T440-360q0 83-58.5 141.5T240-160Zm393-360Z"/></svg>
+        <span class="filter-text">Farms</span>
+        <div class="highlight"></div>
+      </a>
+      <a class="filter <%= (category === 'arctic') ? 'active-filter' : '' %>" href="/listings?category=arctic">
+        <svg class="filter-icon" xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000"><path d="M440-80v-73l-64 54-52-61 116-98v-152l-132 76-27 149-79-14 15-83-64 37-40-69 64-37-79-29 27-75 143 51 132-76-132-76-143 52-27-76 79-28-64-37 40-69 64 37-15-83 79-14 27 149 132 76v-152l-116-98 52-61 64 54v-74h80v74l64-54 52 61-116 98v152l131-76 27-149 79 14-15 83 64-37 40 69-64 37 79 28-27 76-143-52-131 76 131 76 143-51 27 75-79 29 64 37-40 69-64-37 15 83-79 14-27-149-131-76v152l116 98-52 61-64-54v73h-80Z"/></svg>
+        <span class="filter-text">Arctic</span>
+        <div class="highlight"></div>
+      </a>
+      <a class="filter <%= (category === 'beaches') ? 'active-filter' : '' %>" href="/listings?category=beaches">
+        <svg class="filter-icon" xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000"><path d="M500-120v-440q-14-18-34.5-29T420-600q-25 0-45.5 10.5T340-560h-80q0-117 81.5-198.5T540-840q117 0 198.5 81.5T820-560h-80q-14-19-34.5-29.5T660-600q-25 0-45.5 11T580-560v440h-80Zm33-520h14q23-19 52.5-29.5T661-680q11 0 21.5 1.5T704-675q-27-39-70-62t-94-23q-51 0-94 23t-70 62q11-2 21.5-3.5T419-680q32 0 61.5 10.5T533-640Zm107 520v-240h240v240h-80v-160h-80v160h-80Zm-480 0v-122q-18-5-30-19t-14-34L80-680h25q23 0 40.5 16t19.5 39l24 265h171q33 0 56.5 23.5T440-280v40h-40v120h-60v-120H220v120h-60Zm380-520Z"/></svg>
+        <span class="filter-text">Beaches</span>
+        <div class="highlight"></div>
+      </a>
+    </div>
+
+    <div class="tax-switch">
+      <div class="form-check form-switch form-check-reverse">
+        <input class="form-check-input" type="checkbox" id="switchCheckReverse">
+        <label class="form-check-label" for="switchCheckReverse">Display total after taxes</label>
+      </div>
+    </div>
+   </div>
   
   <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-2 row-cols-xs-1">
+    <% if (!listings.length) { %>
+      <h2 class="no-listings-text">No listings found.</h2>
+    <% } %>
+
     <% for (let listing of listings) { %>
       <a class="listing-link" href="/listings/<%= listing.id %>">
           <div class="card listing-card">
             <div class="card-img-overlay"></div>
-            <img src="<%= listing.image %>" class="card-img-top" alt="Image of a listing.">
+            <img src="<%= listing.image.url %>" class="card-img-top" alt="Image of a listing.">
             <div class="card-body">
               <p class="card-text listing-title"><b><%= listing.title %></b></p>
-              <p class="card-text listing-price">$<%= listing.price.toLocaleString('en-US') %> / night</p>  
+              <p class="card-text listing-price">
+                <span class="price-before-tax">
+                  $<%= listing.price.toLocaleString('en-US') %>
+                </span>
+                <span style="display: none" class="price-after-tax">
+                  $<%= Math.ceil(((Number(listing.price) + (Number(listing.price) * 0.1)))).toLocaleString('en-US')  %>
+                </span>
+                / night
+              </p>  
             </div>
           </div>
       </a>
     <% } %>
   </div>
 
-  <hr>
+  <script>
+    const taxSwitcher = document.getElementById("switchCheckReverse")
+    const priceBeforeTax = document.querySelectorAll('.price-before-tax')
+    const priceAfterTax = document.querySelectorAll('.price-after-tax')
+
+    taxSwitcher.addEventListener('click', () => {
+      priceBeforeTax.forEach((element) => {
+        element.style.display = (element.style.display === 'none') ? 'initial' : 'none'
+      })
+      
+      priceAfterTax.forEach((element) => {
+        element.style.display = (element.style.display === 'none') ? 'initial' : 'none'
+      })
+    })
+  </script>
 </body>

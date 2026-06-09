@@ -2,49 +2,35 @@ import express from 'express'
 import { wrapAsync } from "../utils/wrapAsync.js"
 import { isLoggedIn, isOwner, validateListing } from '../middleware.js'
 import listingController from '../controllers/listings.js'
+import multer from 'multer'
+import { cloudinary, storage } from '../cloud-config.js'
 
 const router = express.Router({ mergeParams: true })
+const upload = multer({ storage })
 
-// ROUTES
+router.route('/')
+  .get(wrapAsync(listingController.index))
+  .post(
+    isLoggedIn,
+    upload.single("listing[image]"),
+    validateListing,
+    wrapAsync(listingController.createListing)
+  )
 
-// Index Route
-router.get('/', wrapAsync(listingController.index))
-
-// New Route
 router.get('/new', isLoggedIn, listingController.renderNewForm)
 
-// Show Route
-router.get('/:id', wrapAsync(listingController.showListing))
+router.route('/:id')
+  .get(wrapAsync(listingController.showListing))
+  .delete(isLoggedIn, isOwner, wrapAsync(listingController.deleteListing))
 
-// Create Route
-router.post('/',
-  isLoggedIn,
-  validateListing,
-  wrapAsync(listingController.createListing)
-)
-
-// Edit Route
-router.get('/:id/edit',
-  isLoggedIn,
-  isOwner,
-  wrapAsync(listingController.renderEditForm)
-)
-
-// Update Route
-router.patch(
-  '/:id/edit',
-  isLoggedIn,
-  validateListing,
-  isOwner,
-  wrapAsync(listingController.updateListing)
-)
-
-// Destroy Route
-router.delete(
-  '/:id',
-  isLoggedIn,
-  isOwner,
-  wrapAsync(listingController.deleteListing)
-)
+router.route('/:id/edit')
+  .get(isLoggedIn, isOwner, wrapAsync(listingController.renderEditForm))
+  .put(
+    isLoggedIn,
+    isOwner,
+    upload.single("listing[image]"),
+    validateListing,
+    wrapAsync(listingController.updateListing)
+  )
 
 export default router

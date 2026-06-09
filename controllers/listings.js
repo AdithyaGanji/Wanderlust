@@ -1,8 +1,24 @@
 import { Listing } from "../models/listing.js"
 
 const index = async (req, res) => {
-  const listings = await Listing.find()
-  res.render('listings/listings.ejs', { listings })
+  let { location, category } = req.query
+  let query = {}
+
+  if (location && location.length) {
+    location = location.trim()
+    query = {
+      $or: [
+        { location: {$regex: location, $options: 'i' } },
+        { country: {$regex: location, $options: 'i' } },
+      ]
+    }
+  }
+  else if (category && category != 'trending') { 
+    query = { category }
+  }
+
+  const listings = await Listing.find(query)
+  res.render('listings/listings.ejs', { listings, category })
 }
 
 const renderNewForm = (req, res) => {
@@ -31,6 +47,11 @@ const showListing = async (req, res) => {
 const createListing = async (req, res) => {
   const newListing = new Listing(req.body.listing)
   newListing.owner = req.user
+  
+  if (req.file) {
+    newListing.image.fileName = req.file.filename
+    newListing.image.url = req.file.path
+  }
 
   await newListing.save()
 
@@ -47,12 +68,17 @@ const renderEditForm = async (req, res) => {
     return res.redirect('/listings')
   }
 
-  res.render('listings/edit.ejs', { listing })
+  const originalListingURL = (listing.image.url).replace("/upload", "/upload/h_200")
+  res.render('listings/edit.ejs', { listing, originalListingURL })
 }
 
 const updateListing = async (req, res) => {
   const { id } = req.params
   const { listing } = req.body
+
+  if (req.file) {
+    listing.image = { url: req.file.path, filename: req.file.filename  }
+  }
 
   await Listing.findByIdAndUpdate(
     id,
