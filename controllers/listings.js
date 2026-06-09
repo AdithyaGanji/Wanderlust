@@ -18,7 +18,11 @@ const index = async (req, res) => {
   }
 
   const listings = await Listing.find(query)
-  res.render('listings/listings.ejs', { listings, category })
+
+  const props = { listings }
+  props.category = (location) ? '' : category
+
+  res.render('listings/listings.ejs', props)
 }
 
 const renderNewForm = (req, res) => {
