@@ -12,6 +12,8 @@ import passport from 'passport'
 import LocalStrategy from 'passport-local'
 import { User } from './models/user.js'
 import { configDotenv } from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 if (process.env.NODE_ENV !== 'production')
   configDotenv()
@@ -20,6 +22,8 @@ const port = 8080
 const app = express()
 const dbURL = process.env.ATLASDB_URL
 // const dbURL = 'mongodb://127.0.0.1:27017/wanderlust'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const store = MongoStore.create({
   mongoUrl: dbURL,
@@ -45,6 +49,7 @@ const sessionOptions = {
   store
 }
 
+app.set('views', path.join(__dirname, 'views'))
 app.set("view engine", 'ejs')
 app.engine('ejs', ejsMate)
 app.use(express.static('public'))
