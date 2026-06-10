@@ -6,13 +6,33 @@ import listingsRouter from './routes/listing.js'
 import reviewsRouter from './routes/review.js'
 import usersRouter from './routes/user.js'
 import session from 'express-session'
+import MongoStore from 'connect-mongo'
 import flash from 'connect-flash'
 import passport from 'passport'
 import LocalStrategy from 'passport-local'
 import { User } from './models/user.js'
+import { configDotenv } from 'dotenv'
+
+if (process.env.NODE_ENV !== 'production')
+  configDotenv()
 
 const port = 8080
 const app = express()
+const dbURL = process.env.ATLASDB_URL
+// const dbURL = 'mongodb://127.0.0.1:27017/wanderlust'
+
+const store = MongoStore.create({
+  mongoUrl: dbURL,
+  crypto: {
+    secret: "supersecretkey"
+  },
+  touchAfter: 24 * 60 * 60
+})
+
+store.on("error", () => {
+  console.log("Error in Mongo Session Store.")
+})
+
 const sessionOptions = {
   secret: "supersecretkey",
   resave: false,
@@ -21,7 +41,8 @@ const sessionOptions = {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true
-  }
+  },
+  store
 }
 
 app.set("view engine", 'ejs')
@@ -40,7 +61,7 @@ passport.deserializeUser(User.deserializeUser());
 
 (async function () {
   try {
-    const res = await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust')
+    const res = await mongoose.connect(dbURL)
     console.log("DB connection successful!")
   } catch (err) {
     console.log(err)

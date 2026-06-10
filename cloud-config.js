@@ -2,7 +2,7 @@ import { v2 as cloudinary } from 'cloudinary'
 import { CloudinaryStorage } from 'multer-storage-cloudinary'
 import { configDotenv } from 'dotenv'
 
-if (process.env.NODE_ENV != 'production')
+if (process.env.NODE_ENV !== 'production')
   configDotenv()
 
 cloudinary.config({

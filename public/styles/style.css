@@ -242,10 +242,10 @@ footer {
 }
 
 .tax-switch {
+  font-weight: 475;
   padding: 0.781rem 1.125rem;
   border: 1px solid #D0D0D0;
   border-radius: 15px;
-  font-weight: 500;
 }
 
 .form-check-label {
