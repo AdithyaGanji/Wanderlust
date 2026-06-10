@@ -68,10 +68,6 @@ passport.deserializeUser(User.deserializeUser());
   }
 })()
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`)
-})
-
 app.use((req, res, next) => {
   res.locals.currentUser = req.user
 
@@ -96,3 +92,11 @@ app.use((err, req, res, next) => {
   console.log(err)
   res.status(statusCode).render('error.ejs', { message })
 })
+  
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}`)
+  })
+}
+
+export default app
