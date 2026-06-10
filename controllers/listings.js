@@ -72,7 +72,7 @@ const renderEditForm = async (req, res) => {
     return res.redirect('/listings')
   }
 
-  const originalListingURL = (listing.image.url).replace("/upload", "/upload/h_200")
+  const originalListingURL = listing.image.url
   res.render('listings/edit.ejs', { listing, originalListingURL })
 }
 
