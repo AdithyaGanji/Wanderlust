@@ -261,17 +261,22 @@ footer {
   cursor: pointer;
 }
 
+.search-wrapper {
+  column-gap: .475rem;
+  align-items: center;
+}
+
 .navbar-search-submit {
   display: flex;
   justify-content: center;
   align-items: center;
   column-gap: .25rem;
-  padding: 0.594rem;
+  padding: 0.5rem;
   border-radius: 50%;
 }
 
 .navbar-search-field {
-  padding-inline: 1.25rem;
+  padding: .55rem 1.25rem;
   border-radius: 30px;
 }
 
