@@ -1,6 +1,6 @@
 # Wanderlust
 
-A fully-responsive web application designed to simulate a real-world travel accommodation marketplace (like Airbnb). The platform allows travelers to explore and search listings, while hosts can list, manage, and receive reviews for their properties.
+A full-stack web application designed to simulate a real-world travel accommodation marketplace (like Airbnb). The platform allows travelers to explore and search listings, while hosts can list, manage, and receive reviews for their properties.
 
 ---
 
@@ -46,4 +46,4 @@ A fully-responsive web application designed to simulate a real-world travel acco
 ---
 
 ### Live Demo
-[Visit Wanderlust Here!](https://the-wanderlust.vercel.app) - deployed on Vercel.
+[Visit Wanderlust Here!](https://the-wanderlust.vercel.app)
